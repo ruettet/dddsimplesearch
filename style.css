@@ -1,0 +1,77 @@
+body
+{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-family: sans-serif;
+}
+
+#header
+{
+  margin-top: 3em;
+  text-align: center;
+}
+
+#search
+{
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#textfield
+{
+  margin-top: 2em;
+  padding: 1em;
+  text-align: center;
+}
+
+#textfield input
+{
+  font-size:140%;
+  text-align: center;
+  border:solid 1px;
+  width: 30em;
+  height: 2em;
+}
+
+#actionfield
+{
+  text-align:center;
+  margin-top: 2em;
+}
+
+#actionfield button
+{
+  width: 150px;
+  height: 3em;
+  font-size: 100%;
+  text-align: center;
+}
+
+#metafield
+{
+  margin-top: 2em;
+}
+
+#metatable
+{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+#metatable td
+{
+  width: 180px;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+}
+
+#metatable ul
+{
+  list-style: none;
+  padding: 0;
+}
