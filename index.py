@@ -54,7 +54,7 @@ def resolveDiacritics(word):
                 ur"z": ur"[z\u01B7]",
                 ur"s": ur"[sß\u017F]",
                 ur"d": ur"[d\u0110\u0111\u00DE\u00FE]",
-                ur"e": ur"[eêe\u0304\u0306e\u0304e\u0306\u025B\u03B5]"
+                ur"e": ur"[eêe\u0304\u0306e\u0304e\u0306\u025B\u03B5ē]"
                }
   for letter in diacritics.keys():
     word = word.replace(letter, diacritics[letter])
@@ -72,7 +72,8 @@ def parseQuery(d, a):
         searchlist = []
         for annoattr in a[attr]:
           if len(regex.findall( annoattr )) > 0:
-            searchlist.append(regexescape(annoattr))
+            if annoattr not in searchlist:
+              searchlist.append(regexescape(annoattr))
         if len(searchlist) > 0:
           search = attr + "=/(" + "|".join(searchlist) + ")/"
         if search:
