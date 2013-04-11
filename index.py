@@ -94,10 +94,18 @@ def parseZeit(d, a):
   except KeyError:
     return ""
 
-def parseRaum(d):
+def parseRaum(d, a):
+  out = []
   try:
-    locs = str(d["raum"])
-    return locs
+    locs = d["raum"]
+    poslocs = a["default_ns:Sprachlandschaft"]
+    for loc in locs:
+      for posloc in poslocs:
+        if posloc.lower().startswith(loc.lower()):
+          if posloc not in out:
+            out.append(posloc)
+    q = unicode(" & meta::Sprachlandschaft=/(" + "|".join(out) + ")/").encode("utf-8")
+    return q
   except KeyError:
     return ""
 
@@ -118,8 +126,8 @@ def parseText(d, a):
 
 def createAQL(query, zeit, raum, text):
   baseurl = "https://korpling.german.hu-berlin.de/annis3/instance-ddd/#"
-  aqlurl = "_q=" + query.strip().encode("base64") + text.encode("base64") + zeit.encode("base64")
-  aqlstr = query + text + zeit
+  aqlurl = "_q=" + query.strip().encode("base64") + text.encode("base64") + zeit.encode("base64") + raum.encode("base64")
+  aqlstr = query + text + zeit + raum
   corpora = getDDDCorpora()
   scope = "&c=" + ",".join(corpora) + "&cl=5&cr=5&s=0&l=10"
   return aqlstr, unicode(baseurl.strip() + aqlurl.strip() + scope.strip())
@@ -135,7 +143,7 @@ def form2aql(form, adict):
   d = cgiFieldStorageToDict(form)
   query = parseQuery(d, adict)
   zeit = parseZeit(d, adict)
-  raum = parseRaum(d)
+  raum = parseRaum(d, adict)
   text = parseText(d, adict)
   return createAQL(query, zeit, raum, text)
 
