@@ -24,7 +24,7 @@ def getDDDAnnotations(corpora):
         annodict[name].extend(values)
         annodict[name] = list(set(annodict[name]))
       except KeyError:
-        annodict[name] = values
+        annodict[name] = list(set(values))
   return annodict
 
 def aql(ps):
@@ -65,19 +65,29 @@ def parseQuery(d, a):
     words = d["query"][0].split()
     parameters = []
     for word in words:
-      search = u""
+      search = ""
       for attr in a.keys():
         worddiacritics = resolveDiacritics(word)
-        regex = re.compile(ur"\b" + worddiacritics + ur"\b", re.UNICODE | re.IGNORECASE)
+        regex = re.compile(r"\b" + worddiacritics + r"\b", re.UNICODE | re.IGNORECASE)
+        searchlist = []
         for annoattr in a[attr]:
           if len(regex.findall( annoattr )) > 0:
-            search = attr + ur"=/" + ur"|".join(regex.findall(annoattr)) + ur"/"
-            break
-      if search:
-        parameters.append(search)
+            searchlist.append(regexescape(annoattr))
+        if len(searchlist) > 0:
+          search = attr + "=/(" + "|".join(searchlist) + ")/"
+        if search:
+          parameters.append(search)
+          break
     return aql(parameters)
   except KeyError:
     return ""
+
+def regexescape(s):
+  s = s.replace("|", "\|")
+  s = s.replace("(", "\(")
+  s = s.replace(")", "\)")
+  s = s.replace(".", "\.")
+  return s
 
 def parseZeit(d, a):
   out = []
@@ -138,14 +148,14 @@ def createAQL(query, zeit, raum, text):
   aqlurl = "_q=" + aqlurl.encode("base64")
   aqlstr = query + text + zeit + raum
   corpora = getDDDCorpora()
-  scope = "&_c=" + unicode(",".join(corpora)).encode("base64") + "&cl=5&cr=5&s=0&l=10"
+  scope = "&_c=" + unicode(",".join(corpora)).encode("base64") + "&cl=5&cr=5&s=0&l=10&seg=txt"
   return aqlstr, unicode(baseurl.strip() + aqlurl + scope.strip())
 
 def cgiFieldStorageToDict( fieldStorage ):
   params = {}
   for key in fieldStorage.keys():
     params[key] = fieldStorage.getlist(key)
-#  params = params = {"query": ["inti biginnan"], "text": ["alltag"]}
+#  params = params = {"query": ["lieber"], "text": ["alltag"]}
   return params
 
 def form2aql(form, adict):
