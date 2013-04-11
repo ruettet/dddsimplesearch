@@ -89,7 +89,7 @@ def parseZeit(d, a):
         if posera.startswith(era):
           if posera not in out:
             out.append(posera)
-    q = unicode(" & meta::Entstehungszeit=/(" + "|".join(out) + ")/").encode("utf-8")
+    q = unicode("meta::Entstehungszeit=/(" + "|".join(out) + ")/").encode("utf-8")
     return q
   except KeyError:
     return ""
@@ -104,7 +104,7 @@ def parseRaum(d, a):
         if posloc.lower().startswith(loc.lower()):
           if posloc not in out:
             out.append(posloc)
-    q = unicode(" & meta::Sprachlandschaft=/(" + "|".join(out) + ")/").encode("utf-8")
+    q = unicode("meta::Sprachlandschaft=/(" + "|".join(out) + ")/").encode("utf-8")
     return q
   except KeyError:
     return ""
@@ -119,25 +119,33 @@ def parseText(d, a):
         if posreg.lower().startswith(reg.lower()):
           if posreg not in out:
             out.append(posreg)
-    q = unicode(" & meta::Textbereich=/(" + "|".join(out) + ")/").encode("utf-8")
+    q = unicode("meta::Textbereich=/(" + "|".join(out) + ")/").encode("utf-8")
     return q
   except KeyError:
     return ""
 
 def createAQL(query, zeit, raum, text):
-  if query == "" and (zeit != "" or raum != "" or text != ""):
-    query = "txt"
   baseurl = "https://korpling.german.hu-berlin.de/annis3/instance-ddd/#"
-  aqlurl = "_q=" + query.strip().encode("base64") + text.encode("base64") + zeit.encode("base64") + raum.encode("base64")
+  aqlurl = ""
+  if query:
+    aqlurl = query.strip()
+  if text:
+    aqlurl = aqlurl + " & " + text.strip()
+  if zeit:
+    aqlurl = aqlurl + " & " + zeit.strip()
+  if raum:
+    aqlurl = aqlurl + " & " + raum.strip()
+  aqlurl = "_q=" + aqlurl.encode("base64")
   aqlstr = query + text + zeit + raum
   corpora = getDDDCorpora()
-  scope = "&c=" + ",".join(corpora) + "&cl=5&cr=5&s=0&l=10"
-  return aqlstr, unicode(baseurl.strip() + aqlurl.strip() + scope.strip())
+  scope = "&_c=" + unicode(",".join(corpora)).encode("base64") + "&cl=5&cr=5&s=0&l=10"
+  return aqlstr, unicode(baseurl.strip() + aqlurl + scope.strip())
 
 def cgiFieldStorageToDict( fieldStorage ):
   params = {}
   for key in fieldStorage.keys():
     params[key] = fieldStorage.getlist(key)
+#  params = params = {"query": ["inti biginnan"], "text": ["alltag"]}
   return params
 
 def form2aql(form, adict):
@@ -157,5 +165,6 @@ aqlstr, url = form2aql(form, annos)
 print "Content-Type: text/html\n"
 print '<html><body>'
 print '<a href="' + url + '">perform the search in Annis</a>'
-print '<p>Die AQL Abfrage ist: ' + aqlstr + '</p>'
+print '<pre>Die AQL Abfrage ist: ' + aqlstr + '</pre>'
+print '<pre>Die url ist: ' + url + '</pre>'
 print '</body></html>'
