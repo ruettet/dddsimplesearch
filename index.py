@@ -22,7 +22,7 @@ def getDDDAnnotations(corpora):
       values = regexValues.findall(attribute)
       try:
         annodict[name].extend(values)
-        annodict[name] = set(annodict[name])
+        annodict[name] = list(set(annodict[name]))
       except KeyError:
         annodict[name] = values
   return annodict
@@ -68,10 +68,10 @@ def parseQuery(d, a):
       search = u""
       for attr in a.keys():
         worddiacritics = resolveDiacritics(word)
-        regex = re.compile(ur"\b" + worddiacritics + ur"\b", re.UNICODE)
+        regex = re.compile(ur"\b" + worddiacritics + ur"\b", re.UNICODE | re.IGNORECASE)
         for annoattr in a[attr]:
           if len(regex.findall( annoattr )) > 0:
-            search = attr + ur"=/" + ur"|".join((regex.findall(annoattr))) + ur"/"
+            search = attr + ur"=/" + ur"|".join(regex.findall(annoattr)) + ur"/"
             break
       if search:
         parameters.append(search)
@@ -125,7 +125,7 @@ def parseText(d, a):
     return ""
 
 def createAQL(query, zeit, raum, text):
-  baseurl = "https://korpling.german.hu-berlin.de/annis3/instance-ddd/#"
+  baseurl = "https://korpling.german.hu-berlin.de/annis3/instance-ddd#"
   aqlurl = ""
   if query:
     aqlurl = query.strip()
