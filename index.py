@@ -5,7 +5,7 @@ import urllib2, re, urllib, cgi
 
 def getDDDCorpora():
   xml = urllib2.urlopen('https://korpling.german.hu-berlin.de/annis3-service/annis/query/corpora').read().decode("utf-8")
-  regex = re.compile("<name>(DDD-Kl.+?)</name>")
+  regex = re.compile("<name>(DDD-.+?)</name>")
   return regex.findall(xml)
 
 def getDDDAnnotations(corpora):
