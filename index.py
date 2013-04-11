@@ -138,7 +138,6 @@ def cgiFieldStorageToDict( fieldStorage ):
   params = {}
   for key in fieldStorage.keys():
     params[key] = fieldStorage.getlist(key)
-#  params = {"query": ["inti biginnan"], "text": ["alltag"]}
   return params
 
 def form2aql(form, adict):
