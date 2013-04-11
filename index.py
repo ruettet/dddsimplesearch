@@ -79,11 +79,18 @@ def parseQuery(d, a):
   except KeyError:
     return ""
 
-def parseZeit(d):
+def parseZeit(d, a):
+  out = []
   try:
-    eras = str(d["zeit"])
-    
-    return eras
+    eras = d["zeit"]
+    poseras = a["default_ns:Entstehungszeit"]
+    for era in eras:
+      for posera in poseras:
+        if posera.startswith(era):
+          if posera not in out:
+            out.append(posera)
+    q = unicode(" & meta::Entstehungszeit=/(" + "|".join(out) + ")/").encode("utf-8")
+    return q
   except KeyError:
     return ""
 
@@ -111,8 +118,8 @@ def parseText(d, a):
 
 def createAQL(query, zeit, raum, text):
   baseurl = "https://korpling.german.hu-berlin.de/annis3/instance-ddd/#"
-  aqlurl = "_q=" + query.strip().encode("base64") + text.encode("base64")
-  aqlstr = query + text
+  aqlurl = "_q=" + query.strip().encode("base64") + text.encode("base64") + zeit.encode("base64")
+  aqlstr = query + text + zeit
   corpora = getDDDCorpora()
   scope = "&c=" + ",".join(corpora) + "&cl=5&cr=5&s=0&l=10"
   return aqlstr, unicode(baseurl.strip() + aqlurl.strip() + scope.strip())
@@ -127,7 +134,7 @@ def cgiFieldStorageToDict( fieldStorage ):
 def form2aql(form, adict):
   d = cgiFieldStorageToDict(form)
   query = parseQuery(d, adict)
-  zeit = parseZeit(d)
+  zeit = parseZeit(d, adict)
   raum = parseRaum(d)
   text = parseText(d, adict)
   return createAQL(query, zeit, raum, text)
