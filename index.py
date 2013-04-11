@@ -125,6 +125,8 @@ def parseText(d, a):
     return ""
 
 def createAQL(query, zeit, raum, text):
+  if query == "" and (zeit != "" or raum != "" or text != ""):
+    query = "txt"
   baseurl = "https://korpling.german.hu-berlin.de/annis3/instance-ddd/#"
   aqlurl = "_q=" + query.strip().encode("base64") + text.encode("base64") + zeit.encode("base64") + raum.encode("base64")
   aqlstr = query + text + zeit + raum
