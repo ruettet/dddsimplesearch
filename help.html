@@ -13,7 +13,7 @@
   <p>
     <a href="./index.html">Simplified search</a> - 
     <a href="https://korpling.german.hu-berlin.de/annis3/instance-ddd">Advanced search</a> -
-    Hilfe
+    Documentation
   </p>
 </header>
 
@@ -32,16 +32,27 @@
     <h4>Query box</h4>
       <p>The query box is set up to parse the input that it receives in such a way that a more complex ANNIS query can be written. We need to distinguish between "single word" and "multiple words" queries.</p>
       <p>A single word query distinguishes itself from a multiple words query simply by the fact that more than one word is entered. If a single word is entered, the query is parsed as follows: the parser goes through selected annotation levels (translation, lemma, txt (in this order)), and through all the annotation values per level; if for a specific level some values are found that match the input, that level is queried. If more than word is entered, the parsing goes as follows: for each word, the parsing is identical to the parsing of a single word; after all single words are parsed, the retrieved queries are concatenated, allowing for up to three words in between.</p>
+      <p>The parser of the query box also resolves diacritics from simple ascii input to the diacritics that occur in the corpora.</p>
+      <p>Finally, it is possible to use simple regular expressions in the query box</p>
 
     <h4>Meta constraints</h4>
       <p>For the convenience of the non-scientific user, a number of ad-hoc (and as such non-authorative) categories of meta-information are provided. The values in these categories are most certainly debatable, and in no way final. Moreover, the attribution of these values to specific texts is in certain cases questionable. These meta-constraints are therefore only usuable for the non-scientific user, and any informed scholar would prefer the ANNIS search tool, in which the queries can be precisely formulated.</p>
-      <p>The time constraint is based on the century in which the text is supposedly written down.</p>
-      <p>The text type constraint is based on the interpretation of the scholars in the DDD project.</p>
-      <p>The geospatial constraint is based on an interpretation of the dialect area that some texts may be typical for.</p>
+      <ul>
+        <li>The time constraint is based on the century in which the text is supposedly written down.</li>
+        <li>The text type constraint is based on the interpretation of the scholars in the DDD project.</li>
+        <li>The geospatial constraint is based on an interpretation of the dialect area that some texts may be typical for.</li>
+      </ul>
       <p>Once again, the levels of these meta-categories and the attributions of these levels to the texts are highly debatable, not to be considered as final or authorative.</p>
 
-  <h3>Beispielabfragen</h3>
-    <p>A number of things that can be typed in... [under construction]</p>
+  <h3>Example queries</h3>
+    <p>A number of things that can be typed in for your inspiration:</p>
+    <ul>
+      <li>fater unser</li>
+      <li>vater unser</li>
+      <li>.ater unser</li>
+      <li>jesus, with meta constraint on Alemannisch</li>
+      <li>...</li>
+    </ul>
 
   <h3>Source and development</h3>
     <p>The source code and development of the simplified search can be monitored on <a href="http://www.github.com/ruettet/dddsimplesearch">GitHub</a>.</p>

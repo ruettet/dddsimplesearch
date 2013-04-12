@@ -6,12 +6,40 @@ body
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+  font-family: serif;
+}
+
+h1
+{
+  font-family: serif;
+  font-size: 300%;
+}
+
+h2
+{
   font-family: sans-serif;
+  color: grey;
+  font-size: 200%;
+}
+
+h3
+{
+  font-family: sans-serif;
+  color: grey;
+  font-size: 160%;
+}
+
+h4
+{
+  font-family: sans-serif;
+  color: grey;
+  font-size: 100%;
 }
 
 header
 {
   margin-top: 3em;
+  margin-bottom: 5em;
   text-align: center;
 }
 
@@ -44,6 +72,7 @@ footer
   border:solid 1px;
   width: 95%;
   height: 2em;
+  font-family: serif;
 }
 
 #actionfield
@@ -58,6 +87,7 @@ footer
   height: 3em;
   font-size: 100%;
   text-align: center;
+  font-family: serif;
 }
 
 #metafield
