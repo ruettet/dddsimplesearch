@@ -8,22 +8,48 @@
 
 <body>
 
-<div id="header">
+<header>
 <h1>Deutsch Diachron Digital</h1>
-<h2>Dokumentation vereinfachte Suche</h2>
   <p>
-    <a href="./index.html">Vereinfachte Suche</a> - 
-    <a href="https://korpling.german.hu-berlin.de/annis3/instance-ddd">Differenzierte Suche</a>
+    <a href="./index.html">Simplified search</a> - 
+    <a href="https://korpling.german.hu-berlin.de/annis3/instance-ddd">Advanced search</a> -
+    Hilfe
   </p>
-</div>
+</header>
 
 <div>
+<h2>Documentation simplified search</h2>
   <h3>Einleitung</h3>
-    <p>Goals of this simple search, and the limitations</p>
-    <p>Disclaimer: exact scientific searches should be made via ANNIS</p>
+    <p>The simplified search page is meant to be one of two entrance points for accessing the corpora in the Deutsch Diachron Digital project.</p>
+    <p>The first entrance point is the <a href="https://korpling.german.hu-berlin.de/annis3/instance-ddd">ANNIS search interface</a>, which offers a <a href="http://www.sfb632.uni-potsdam.de/annis/aql.html">formulaic query language (AQL)</a> and a more visual query builder. The ANNIS search options offer a highly accurate and thorough tackle on the available corpora and are advised for scientific research.</p>
+    <p>The simplified search page is the second entrance point, and is intended for the general audience, or for quick and imprecise searches.</p>
+  
+  <h3>Simplified search</h3>
+    <p>The simplified search page consists of three parts. The upper part merely states the project name, but also offers a link to the <a href="https://korpling.german.hu-berlin.de/annis3/instance-ddd">advised ANNIS search tool</a>, <a href="./index.html">the simplified search</a>, and this documentation page.</p>
+    <p>The middle part consists of a large query box in which a query can be entered. More information about this box is provided below.</p>
+    <p>At the bottom of the page, tickboxes allow the non-scientific user to constrain the query in the query box to a number of ad-hoc categories. More information on these meta-categories is provided below.</p>
+
+    <h4>Query box</h4>
+      <p>The query box is set up to parse the input that it receives in such a way that a more complex ANNIS query can be written. We need to distinguish between "single word" and "multiple words" queries.</p>
+      <p>A single word query distinguishes itself from a multiple words query simply by the fact that more than one word is entered. If a single word is entered, the query is parsed as follows: the parser goes through all annotation levels, and through all the annotation values per level; if for a specific level some values are found that match the input, that level is queried. If more than word is entered, the parsing goes as follows: for each word, the parsing is identical to the parsing of a single word; after all single words are parsed, the retrieved queries are concatenated, allowing for up to three words in between.</p>
+
+    <h4>Meta constraints</h4>
+      <p>For the convenience of the non-scientific user, a number of ad-hoc (and as such non-authorative) categories of meta-information are provided. The values in these categories are most certainly debatable, and in no way final. Moreover, the attribution of these values to specific texts is in certain cases questionable. These meta-constraints are therefore only usuable for the non-scientific user, and any informed scholar would prefer the ANNIS search tool, in which the queries can be precisely formulated.</p>
+      <p>The time constraint is based on the century in which the text is supposedly written down.</p>
+      <p>The text type constraint is based on the interpretation of the scholars in the DDD project.</p>
+      <p>The geospatial constraint is based on an interpretation of the dialect area that some texts may be typical for.</p>
+      <p>Once again, the levels of these meta-categories and the attributions of these levels to the texts are highly debatable, not to be considered as final or authorative.</p>
 
   <h3>Beispielabfragen</h3>
-    <p>A number of things that can be typed in</p>
+    <p>A number of things that can be typed in... [under construction]</p>
+
+  <h3>Source and development</h3>
+    <p>The source code and development of the simplified search can be monitored on <a href="http://www.github.com/ruettet/dddsimplesearch">GitHub</a>.</p>
 
 </div>
+<footer>
+<hr/>
+<p>Documentation to the simplified search of the Deutsch Diachron Digital corpora.</p>
+<p>Questions or comments: <a href="http://www2.hu-berlin.de/sprachgeschichte/mitarbeiter/ruette.php">Tom Ruette</a></p>
+</footer>
 </html>

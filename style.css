@@ -1,16 +1,24 @@
 body
 {
-  width: 80%;
+  width: 70%;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
   font-family: sans-serif;
 }
 
-#header
+header
 {
   margin-top: 3em;
   text-align: center;
+}
+
+footer
+{
+  margin-top: 5em;
+  margin-bottom: 3em;
+  text-align: center;
+  font-size: 70%;
 }
 
 #search
@@ -59,6 +67,7 @@ body
 {
   margin-left: auto;
   margin-right: auto;
+  text-align: left;
 }
 
 
@@ -74,6 +83,7 @@ body
 {
   list-style: none;
   padding: 0;
+  text-align: left;
 }
 
 #progress
