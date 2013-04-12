@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import urllib2, re, urllib, cgi
+import urllib2, re, urllib, cgi, codecs
+import cgitb
 
 def getDDDCorpora():
   xml = urllib2.urlopen('https://korpling.german.hu-berlin.de/annis3-service/annis/query/corpora').read().decode("utf-8")
@@ -61,8 +62,6 @@ def resolveDiacritics(word):
   return word
 
 def parseQuery(d, a):
-# if quotes around complete query, aql should be .
-# if quotes around one word in the query, the regex should not have .*
   try:
     words = d["query"][0].split()
     parameters = []
@@ -173,6 +172,7 @@ def form2aql(form, adict):
 
 corpora = getDDDCorpora()
 annos = getDDDAnnotations(corpora)
+cgitb.enable(display=1)
 form = cgi.FieldStorage()
 aqlstr, url = form2aql(form, annos)
 
