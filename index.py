@@ -62,12 +62,13 @@ def resolveDiacritics(word):
   return word
 
 def parseQuery(d, a):
+  annolevels = ["elan:translation", "elan:lemma", "elan:txt"]
   try:
     words = d["query"][0].split()
     parameters = []
     for word in words:
       search = ""
-      for attr in a.keys():
+      for attr in annolevels:
         worddiacritics = resolveDiacritics(word)
         regex = re.compile(r"\b" + worddiacritics + r"\b", re.UNICODE | re.IGNORECASE)
         searchlist = []
