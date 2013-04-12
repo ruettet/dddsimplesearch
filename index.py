@@ -61,6 +61,8 @@ def resolveDiacritics(word):
   return word
 
 def parseQuery(d, a):
+# if quotes around complete query, aql should be .
+# if quotes around one word in the query, the regex should not have .*
   try:
     words = d["query"][0].split()
     parameters = []
@@ -71,9 +73,10 @@ def parseQuery(d, a):
         regex = re.compile(r"\b" + worddiacritics + r"\b", re.UNICODE | re.IGNORECASE)
         searchlist = []
         for annoattr in a[attr]:
-          if len(regex.findall( annoattr )) > 0:
-            if annoattr not in searchlist:
-              searchlist.append(regexescape(annoattr))
+          for hit in regex.findall(annoattr):
+            hit = ".*" + regexescape(hit) + ".*"
+            if hit not in searchlist:
+              searchlist.append(hit)
         if len(searchlist) > 0:
           search = attr + "=/(" + "|".join(searchlist) + ")/"
         if search:
@@ -149,7 +152,7 @@ def createAQL(query, zeit, raum, text):
   aqlurl = "_q=" + aqlurl.encode("base64")
   aqlstr = query + text + zeit + raum
   corpora = getDDDCorpora()
-  scope = "&_c=" + unicode(",".join(corpora)).encode("base64") + "&cl=5&cr=5&s=0&l=10&seg=txt"
+  scope = "&_c=" + unicode(",".join(corpora)).encode("base64") + "&cl=7&cr=7&s=0&l=30&seg=txt"
   return aqlstr, unicode(baseurl.strip() + aqlurl + scope.strip())
 
 def cgiFieldStorageToDict( fieldStorage ):
@@ -174,7 +177,10 @@ form = cgi.FieldStorage()
 aqlstr, url = form2aql(form, annos)
 
 print "Content-Type: text/html\n"
-print '<html><body>'
+print '<html>'
+print '<head><meta HTTP-EQUIV="REFRESH" content="10; url='+url+'"></head>'
+print '<body>'
+print '<p>you are redirected in 10 seconds</p>'
 print '<a href="' + url + '">perform the search in Annis</a>'
 print '<pre>Die AQL Abfrage ist: ' + aqlstr + '</pre>'
 print '<pre>Die url ist: ' + url + '</pre>'
