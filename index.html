@@ -17,7 +17,10 @@
 <form method="post" action="index.py">
 
 <div id="textfield">
-<p><input type="text" name="query" placeholder="Geben Sie hier Ihre einfache Suche ein."></p>
+  <p>
+    <input type="text" name="query" placeholder="Geben Sie hier Ihre einfache Suche ein.">
+    <a href="./help.html"><b>?</b></a>
+  </p>
 </div>
 
 <div id="metafield">
@@ -64,37 +67,8 @@
 </div>
 
 </form>
+
 </div>
 
-<div id="progress">
-<table>
-  <tr>
-    <th>Implemented features</th>
-    <th>Requested features</th>
-    <th>Bugs</th>
-  </tr>
-  <tr>
-    <td>
-      <ul>
-        <li>simple input is parsed as aql query with some (1 up to 3) tokens in between</li>
-        <li>if a normal character is given, the search will replace it with a diacritic if one is found</li>
-        <li>meta search in text type and time is already possible</li>
-      </ul>
-    </td>
-    <td>
-      <ul>
-        <li>Meta constraints (raum todo)</li>
-        <li>diacritics input</li>
-        <li>...</li>
-      </ul>
-    </td>
-    <td>
-      <ul>
-        <li>ADD BUG HERE</li> 
-      </ul>
-    </td>
-  </tr>
-</table>
-</div>
 </body>
 </html>
