@@ -1,6 +1,8 @@
 body
 {
   width: 70%;
+  min-width: 600px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -40,7 +42,7 @@ footer
   font-size:140%;
   text-align: center;
   border:solid 1px;
-  width: 30em;
+  width: 95%;
   height: 2em;
 }
 
@@ -61,6 +63,8 @@ footer
 #metafield
 {
   margin-top: 2em;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 #metatable
@@ -73,7 +77,7 @@ footer
 
 #metatable td
 {
-  width: 180px;
+  width: 35%;
   vertical-align: top;
   padding: 0;
   margin: 0;
