@@ -28,7 +28,7 @@ def getDDDAnnotations(corpora):
         annodict[name] = list(set(values))
   return annodict
 
-def aql(ps):
+def aql(ps, strict):
   numbers = u""
   statements = u""
   if len(ps) > 1:
@@ -41,7 +41,10 @@ def aql(ps):
         numbers = numbers + "#" + str(i)
         i += 1
       if j%2 == 0:
-        numbers = numbers + " .1,3 #" + str(i) + " &\n"
+        if strict == True:
+          numbers = numbers + ". +" + str(i) + " &\n"
+        if strict == False:
+          numbers = numbers + " .1,3 #" + str(i) + " &\n"
       j += 1
   if len(ps) == 1:
     statements = ps[0]
@@ -63,6 +66,9 @@ def resolveDiacritics(word):
 
 def parseQuery(d, a):
   annolevel = d["scope"][0]
+  strict = False
+  if d["query"][0].startswith("\"") and d["query"][0].endswith("\""):
+    strict = True
   words = d["query"][0].split()
   parameters = []
   for word in words:
@@ -83,7 +89,7 @@ def parseQuery(d, a):
     if search:
       parameters.append(search)
       break
-  return aql(parameters)
+  return aql(parameters, strict)
 
 def regexescape(s):
   s = s.replace("|", "\|")
