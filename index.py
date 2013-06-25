@@ -42,7 +42,7 @@ def aql(ps, strict):
         i += 1
       if j%2 == 0:
         if strict == True:
-          numbers = numbers + ". +" + str(i) + " &\n"
+          numbers = numbers + ". #" + str(i) + " &\n"
         if strict == False:
           numbers = numbers + " .1,3 #" + str(i) + " &\n"
       j += 1
@@ -73,7 +73,7 @@ def parseQuery(d, a):
   parameters = []
   for word in words:
     search = ""
-    worddiacritics = resolveDiacritics(word)
+    worddiacritics = resolveDiacritics(word.strip("\""))
     regex = re.compile(r"\b" + worddiacritics + r"\b", re.UNICODE | re.IGNORECASE)
     searchlist = []
     try:
@@ -88,7 +88,6 @@ def parseQuery(d, a):
       search = annolevel + "=/(" + "|".join(searchlist) + ")/"
     if search:
       parameters.append(search)
-      break
   return aql(parameters, strict)
 
 def regexescape(s):
