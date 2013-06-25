@@ -12,7 +12,7 @@ def getDDDCorpora():
 def getDDDAnnotations(corpora):
   annodict = {}
   for corpus in corpora:
-    url = str("https://korpling.german.hu-berlin.de/annis3-service/annis/query/corpora/" + corpus + "/annotations?fetchvalues=true")
+    url = str("https://korpling.german.hu-berlin.de/annis3-service/annis/query/corpora/" + corpus + "/annotations?fetchvalues=true&onlymostfrequentvalues=false")
     xml = urllib2.urlopen(url).read().decode("utf-8")
     regexAttr = re.compile("<annisAttribute>(.+?)</annisAttribute>", re.DOTALL)
     regexAttrName = re.compile("<name>(.+?)</name>")
@@ -62,29 +62,28 @@ def resolveDiacritics(word):
   return word
 
 def parseQuery(d, a):
-  annolevels = ["elan:translation", "elan:lemma", "elan:txt"]
-  try:
-    words = d["query"][0].split()
-    parameters = []
-    for word in words:
-      search = ""
-      for attr in annolevels:
-        worddiacritics = resolveDiacritics(word)
-        regex = re.compile(r"\b" + worddiacritics + r"\b", re.UNICODE | re.IGNORECASE)
-        searchlist = []
-        for annoattr in a[attr]:
-          for hit in regex.findall(annoattr):
-            hit = ".*" + regexescape(hit) + ".*"
-            if hit not in searchlist:
-              searchlist.append(hit)
-        if len(searchlist) > 0:
-          search = attr + "=/(" + "|".join(searchlist) + ")/"
-        if search:
-          parameters.append(search)
-          break
-    return aql(parameters)
-  except KeyError:
-    return ""
+  annolevel = d["scope"][0]
+  words = d["query"][0].split()
+  parameters = []
+  for word in words:
+    search = ""
+    worddiacritics = resolveDiacritics(word)
+    regex = re.compile(r"\b" + worddiacritics + r"\b", re.UNICODE | re.IGNORECASE)
+    searchlist = []
+    try:
+      for annoattr in a[annolevel]:
+        for hit in regex.findall(annoattr):
+          hit = ".*" + regexescape(hit) + ".*"
+          if hit not in searchlist:
+            searchlist.append(hit)
+    except KeyError:
+      continue
+    if len(searchlist) > 0:
+      search = annolevel + "=/(" + "|".join(searchlist) + ")/"
+    if search:
+      parameters.append(search)
+      break
+  return aql(parameters)
 
 def regexescape(s):
   s = s.replace("|", "\|")
@@ -159,7 +158,7 @@ def cgiFieldStorageToDict( fieldStorage ):
   params = {}
   for key in fieldStorage.keys():
     params[key] = fieldStorage.getlist(key)
-#  params = params = {"query": ["lieber"], "text": ["alltag"]}
+#  params = params = {"query": ["lieber"], "text": ["alltag"], "scope": ["elan:translation"]}
   return params
 
 def form2aql(form, adict):
@@ -173,7 +172,7 @@ def form2aql(form, adict):
 
 corpora = getDDDCorpora()
 annos = getDDDAnnotations(corpora)
-cgitb.enable(display=1)
+cgitb.enable(display=0)
 form = cgi.FieldStorage()
 aqlstr, url = form2aql(form, annos)
 
