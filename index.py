@@ -101,7 +101,7 @@ def parseZeit(d, a):
   out = []
   try:
     eras = d["zeit"]
-    poseras = a["default_ns:Entstehungszeit"]
+    poseras = a["Entstehungszeit"]
     for era in eras:
       for posera in poseras:
         if posera.startswith(era):
@@ -116,7 +116,7 @@ def parseRaum(d, a):
   out = []
   try:
     locs = d["raum"]
-    poslocs = a["default_ns:Sprachlandschaft"]
+    poslocs = a["Sprachlandschaft"]
     for loc in locs:
       for posloc in poslocs:
         if posloc.lower().startswith(loc.lower()):
@@ -131,7 +131,7 @@ def parseText(d, a):
   out = []
   try:
     regs = d["text"]
-    posregs = a["default_ns:Textbereich"]
+    posregs = a["Textbereich"]
     for reg in regs:
       for posreg in posregs:
         if posreg.lower().startswith(reg.lower()):
@@ -163,7 +163,7 @@ def cgiFieldStorageToDict( fieldStorage ):
   params = {}
   for key in fieldStorage.keys():
     params[key] = fieldStorage.getlist(key)
-#  params = params = {"query": ["lieber"], "text": ["alltag"], "scope": ["elan:translation"]}
+  #params = params = {"query": ["lieber"], "text": ["alltag"], "scope": ["elan:translation"], "zeit": ["9"]}
   return params
 
 def form2aql(form, adict):
@@ -177,7 +177,7 @@ def form2aql(form, adict):
 
 corpora = getDDDCorpora()
 annos = getDDDAnnotations(corpora)
-cgitb.enable(display=0)
+cgitb.enable(display=1)
 form = cgi.FieldStorage()
 aqlstr, url = form2aql(form, annos)
 
@@ -186,6 +186,7 @@ print '<html>'
 print '<head><meta HTTP-EQUIV="REFRESH" content="10; url='+url+'"></head>'
 print '<body>'
 print '<p>you are redirected in 10 seconds</p>'
+print cgiFieldStorageToDict(form)
 print '<a href="' + url + '">perform the search in Annis</a>'
 print '<pre>Die AQL Abfrage ist: ' + aqlstr + '</pre>'
 print '<pre>Die url ist: ' + url + '</pre>'
