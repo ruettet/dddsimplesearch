@@ -143,7 +143,7 @@ def parseText(d, a):
     return ""
 
 def createAQL(query, zeit, raum, text):
-  baseurl = "https://korpling.german.hu-berlin.de/annis3/instance-ddd#"
+  baseurl = "https://korpling.german.hu-berlin.de/annis3/ddd#"
   aqlurl = ""
   if query:
     aqlurl = query.strip()
