@@ -156,7 +156,7 @@ def createAQL(query, zeit, raum, text):
   aqlurl = "_q=" + aqlurl.encode("base64")
   aqlstr = query + text + zeit + raum
   corpora = getDDDCorpora()
-  scope = "&_c=" + unicode(",".join(corpora)).encode("base64") + "&cl=7&cr=7&s=0&l=30&seg=txt"
+  scope = "&_c=" + unicode(",".join(corpora)).encode("base64") + "&cl=7&cr=7&s=0&l=30&seg=edition"
   return aqlstr, unicode(baseurl.strip() + aqlurl + scope.strip())
 
 def cgiFieldStorageToDict( fieldStorage ):
@@ -185,7 +185,7 @@ print "Content-Type: text/html\n"
 print '<html>'
 print '<head><meta HTTP-EQUIV="REFRESH" content="10; url='+url+'"></head>'
 print '<body>'
-print '<p>you are redirected in 10 seconds</p>'
+print '<p>you are redirected in 0 seconds</p>'
 print cgiFieldStorageToDict(form)
 print '<a href="' + url + '">perform the search in Annis</a>'
 print '<pre>Die AQL Abfrage ist: ' + aqlstr + '</pre>'
