@@ -154,7 +154,7 @@ def createAQL(query, zeit, raum, text):
   if raum:
     aqlurl = aqlurl + " & " + raum.strip()
   aqlurl = "_q=" + aqlurl.encode("base64")
-  aqlstr = query + text + zeit + raum
+  aqlstr = query + " & " + text + " & " + zeit + " & " + raum
   corpora = getDDDCorpora()
   scope = "&_c=" + unicode(",".join(corpora)).encode("base64") + "&cl=7&cr=7&s=0&l=30&seg=edition"
   return aqlstr, unicode(baseurl.strip() + aqlurl + scope.strip())
