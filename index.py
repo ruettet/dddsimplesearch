@@ -101,13 +101,13 @@ def parseZeit(d, a):
   out = []
   try:
     eras = d["zeit"]
-    poseras = a["Entstehungszeit"]
+    poseras = a["time"]
     for era in eras:
       for posera in poseras:
         if posera.startswith(era):
           if posera not in out:
             out.append(posera)
-    q = unicode("meta::Entstehungszeit=/(" + "|".join(out) + ")/").encode("utf-8")
+    q = unicode("meta::time=/(" + "|".join(out) + ")/").encode("utf-8")
     return q
   except KeyError:
     return ""
@@ -116,13 +116,13 @@ def parseRaum(d, a):
   out = []
   try:
     locs = d["raum"]
-    poslocs = a["Sprachlandschaft"]
+    poslocs = a["language-area"]
     for loc in locs:
       for posloc in poslocs:
         if posloc.lower().startswith(loc.lower()):
           if posloc not in out:
             out.append(posloc)
-    q = unicode("meta::Sprachlandschaft=/(" + "|".join(out) + ")/").encode("utf-8")
+    q = unicode("meta::language-area=/(" + "|".join(out) + ")/").encode("utf-8")
     return q
   except KeyError:
     return ""
@@ -131,13 +131,13 @@ def parseText(d, a):
   out = []
   try:
     regs = d["text"]
-    posregs = a["Textbereich"]
+    posregs = a["genre"]
     for reg in regs:
       for posreg in posregs:
         if posreg.lower().startswith(reg.lower()):
           if posreg not in out:
             out.append(posreg)
-    q = unicode("meta::Textbereich=/(" + "|".join(out) + ")/").encode("utf-8")
+    q = unicode("meta::genre=/(" + "|".join(out) + ")/").encode("utf-8")
     return q
   except KeyError:
     return ""
